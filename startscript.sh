@@ -1,13 +1,6 @@
-cd ..
-
-apt-get update && apt-get install -y git openssh-client
-mkdir -p ~/.ssh
-ssh-keyscan github.com >> ~/.ssh/known_hosts
-
-rm -rf scr 
-git clone https://github.com/d-gilles/mage_pipelines.git
-mv mage_pipelines scr
-
-cd scr
+cd /home/src
+git clone https://github.com/d-gilles/energy_data_etl.git
+cd energy_data_etl
 pip install -r requirements.txt
-
+cd /home/src
+mage start energy_data_etl
