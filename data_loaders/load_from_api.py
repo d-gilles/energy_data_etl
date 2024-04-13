@@ -45,7 +45,7 @@ def load_data_from_api(*args, **kwargs):
 
     if not os.path.exists(path):
         print(f'creating path {path}')
-        os.makedir(path)
+        os.makedirs(path)
     
     df = client.query_generation(country_code, start=interval_start, end=interval_end, psr_type=None)
     df.to_parquet(file)

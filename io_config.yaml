@@ -137,7 +137,7 @@ default:
 dev:
     # PostgresSQL
   POSTGRES_CONNECT_TIMEOUT: 10
-  POSTGRES_DBNAME: ny_taxi
+  POSTGRES_DBNAME: test_db
   POSTGRES_SCHEMA: energie_data # Optional
   POSTGRES_USER: root
   POSTGRES_PASSWORD: root
@@ -147,4 +147,4 @@ dev:
   AWS_ACCESS_KEY_ID: "{{ env_var('AWS_ACCESS_KEY_ID') }}"
   AWS_SECRET_ACCESS_KEY: "{{ env_var('AWS_SECRET_ACCESS_KEY') }}"
   AWS_SESSION_TOKEN: session_token (Used to generate Redshift credentials)
-  AWS_REGION: region
+  AWS_REGION: "{{ env_var('AWS_REGION') }}"
