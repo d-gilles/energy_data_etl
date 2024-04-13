@@ -19,7 +19,7 @@ blocks:
   color: null
   configuration: {}
   downstream_blocks:
-  - save_to_s3_datalake
+  - export_to_s3
   executor_config: null
   executor_type: local_python
   has_callback: false
@@ -34,22 +34,20 @@ blocks:
   uuid: remove_empty_columns
 - all_upstream_blocks_executed: true
   color: null
-  configuration:
-    file_source:
-      path: data_exporters/save_to_s3_datalake.py
+  configuration: {}
   downstream_blocks: []
   executor_config: null
   executor_type: local_python
   has_callback: false
   language: python
-  name: save_to_s3_datalake
+  name: export_to_s3
   retry_config: null
   status: failed
   timeout: null
   type: data_exporter
   upstream_blocks:
   - remove_empty_columns
-  uuid: save_to_s3_datalake
+  uuid: export_to_s3
 cache_block_output_in_memory: false
 callbacks: []
 concurrency_config: {}

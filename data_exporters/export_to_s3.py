@@ -1,3 +1,9 @@
+from mage_ai.settings.repo import get_repo_path
+from mage_ai.io.config import ConfigFileLoader
+from mage_ai.io.s3 import S3
+from pandas import DataFrame
+from os import path
+
 
 import os 
 import boto3
@@ -17,7 +23,7 @@ def export_data_to_s3(data, **kwargs) -> None:
     file_clean = data[2]
     file = data[1]
     df = data[0]
-    bucket_name = os.getenv('BUCKET_NAME')
+    bucket_name = 'mageetl-datalake-add-your-name'
     s3_client = boto3.client('s3')
 
     parts = file.split('/')

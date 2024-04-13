@@ -148,3 +148,5 @@ dev:
   AWS_SECRET_ACCESS_KEY: "{{ env_var('AWS_SECRET_ACCESS_KEY') }}"
   AWS_SESSION_TOKEN: session_token (Used to generate Redshift credentials)
   AWS_REGION: "{{ env_var('AWS_REGION') }}"
+
+  BUCKET_NAME: "{{ env_var('BUCKET_NAME') }}"
