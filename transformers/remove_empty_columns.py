@@ -18,9 +18,12 @@ def execute_transformer_action(data, *args, **kwargs):
 
     Docs: https://docs.mage.ai/guides/transformer-blocks#remove-columns
     """
+    print(data)
     file = data['file']
     df = pd.read_parquet(file)
-    
+
+    df.reset_index(inplace=True)
+    df.rename(columns={'index': 'Date'}, inplace=True)
 
     # columnnames to drop
     to_drop = [col for col in df.columns if col[1] == 'Actual Consumption']
@@ -43,10 +46,10 @@ def test_output(output, *args) -> None:
     """
     Template code for testing the output of the block.
     """
-    columns = ['Biomass', 'Fossil Brown coal/Lignite', 'Fossil Gas',
+    columns = ['Date', 'Biomass', 'Fossil Brown coal/Lignite', 'Fossil Gas',
        'Fossil Hard coal', 'Fossil Oil', 'Geothermal', 'Hydro Pumped Storage',
        'Hydro Run-of-river and poundage', 'Hydro Water Reservoir', 'Other',
        'Other renewable', 'Solar', 'Waste', 'Wind Offshore', 'Wind Onshore']
 
-    assert output.shape == (96, 15), "export data frame doesn't have the right shape"
+    assert output.shape == (96, 16), "export data frame doesn't have the right shape"
     assert list(output.columns) == columns, "export data frame doesn't have the right column names"

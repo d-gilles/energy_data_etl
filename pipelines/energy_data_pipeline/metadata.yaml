@@ -19,20 +19,37 @@ blocks:
   color: null
   configuration: {}
   downstream_blocks:
-  - export_to_s3
+  - change_column_names
   executor_config: null
   executor_type: local_python
   has_callback: false
   language: python
   name: remove_empty_columns
   retry_config: null
-  status: updated
+  status: executed
   timeout: null
   type: transformer
   upstream_blocks:
   - load_from_api
   uuid: remove_empty_columns
-- all_upstream_blocks_executed: false
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - read_data_from_s3
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: export_to_s3
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - change_column_names
+  uuid: export_to_s3
+- all_upstream_blocks_executed: true
   color: null
   configuration: {}
   downstream_blocks: []
@@ -40,14 +57,33 @@ blocks:
   executor_type: local_python
   has_callback: false
   language: python
-  name: export_to_s3
+  name: read_data_from_s3
   retry_config: null
-  status: updated
+  status: not_executed
   timeout: null
-  type: data_exporter
+  type: data_loader
+  upstream_blocks:
+  - export_to_s3
+  uuid: read_data_from_s3
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    file_source:
+      path: transformers/change_column_names.py
+  downstream_blocks:
+  - export_to_s3
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: change_column_names
+  retry_config: null
+  status: executed
+  timeout: null
+  type: transformer
   upstream_blocks:
   - remove_empty_columns
-  uuid: export_to_s3
+  uuid: change_column_names
 cache_block_output_in_memory: false
 callbacks: []
 concurrency_config: {}

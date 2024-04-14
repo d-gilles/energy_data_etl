@@ -18,6 +18,8 @@ def load_data_from_api(*args, **kwargs):
     """
     execution_date = kwargs['execution_date']
     date = int(execution_date.strftime("%Y%m%d")) -1
+
+    print(date)
     
     # extract year, month, day
     year = date // 10000
@@ -25,9 +27,12 @@ def load_data_from_api(*args, **kwargs):
     day = (date - year * 10000 - month * 100)
 
     # set time interval to yesterday
-    interval_start = pd.Timestamp(str(date), tz='Europe/Berlin')
-    interval_end = pd.Timestamp(str(date +1), tz='Europe/Berlin')
+    interval_start = pd.Timestamp(str(date))
+    interval_end = pd.Timestamp(str(date +1))
     country_code = 'DE'  # Germany
+
+    print(interval_start)
+    print(interval_end)
 
     #define data for api call
     type_marketagreement_type = 'A01' # daily
