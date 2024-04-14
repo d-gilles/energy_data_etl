@@ -12,14 +12,14 @@ if 'test' not in globals():
 
 
 @transformer
-def execute_transformer_action(df: DataFrame, *args, **kwargs) -> DataFrame:
+def execute_transformer_action(data, *args, **kwargs):
     """
     Execute Transformer Action: ActionType.REMOVE
 
     Docs: https://docs.mage.ai/guides/transformer-blocks#remove-columns
     """
-    file = df[1]
-    df = pd.read_parquet(f'{file}.parquet')
+    file = data['file']
+    df = pd.read_parquet(file)
     
 
     # columnnames to drop
@@ -28,13 +28,14 @@ def execute_transformer_action(df: DataFrame, *args, **kwargs) -> DataFrame:
 
     df.columns = df.columns.droplevel(1)
 
-    file_clean = f'{file}_clean'
+    file_clean = f"{data['path']}{data['year']}-{data['month']}-{data['day']}_clean.parquet"
     df.to_parquet(file_clean)
+    data['file_clean'] = file_clean
 
     print(df.shape)
 
 
-    return [df, file]
+    return [df, data]
 
 
 @test
