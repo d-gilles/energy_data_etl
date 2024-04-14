@@ -19,7 +19,7 @@ def execute_transformer_action(df: DataFrame, *args, **kwargs) -> DataFrame:
     Docs: https://docs.mage.ai/guides/transformer-blocks#remove-columns
     """
     file = df[1]
-    df = pd.read_parquet(file)
+    df = pd.read_parquet(f'{file}.parquet')
     
 
     # columnnames to drop
@@ -28,7 +28,11 @@ def execute_transformer_action(df: DataFrame, *args, **kwargs) -> DataFrame:
 
     df.columns = df.columns.droplevel(1)
 
+    file_clean = f'{file}_clean'
+    df.to_parquet(file_clean)
+
     print(df.shape)
+
 
     return [df, file]
 

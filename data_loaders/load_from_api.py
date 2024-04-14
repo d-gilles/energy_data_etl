@@ -34,14 +34,22 @@ def load_data_from_api(*args, **kwargs):
     contract_marketagreement_type = "A01" # daily
     process_type = 'A16' # realized
 
-    path = f'energy_data_etl/data/{year}/{month}'
-    file = f'{path}/{day}.parquet'
+    path = f'energy_data_etl/data/'
+    file = f'{path}{year}-{month}-{day}.parquet'
 
     print(f'Processing {year}/{month}/{day}')
 
+    data = {
+        'file': file,
+        'path': path,
+        'year': year,
+        'month': month,
+        'day': day
+    }
+
     if os.path.exists(file):
         print('file already exists')
-        return [0, file]
+        return data
 
     if not os.path.exists(path):
         print(f'creating path {path}')
@@ -51,7 +59,7 @@ def load_data_from_api(*args, **kwargs):
     df.to_parquet(file)
     print(f'saved locally: {file}')
 
-    return [0, file]
+    return data
 
 
 @test
@@ -59,6 +67,5 @@ def test_output(output, *args) -> None:
     """
     Template code for testing the output of the block.
     """
-    
-    path = args[0]
-    assert os.path.exists(path), 'File is not local available'
+
+    assert os.path.exists(output['file']), 'File is not local available'

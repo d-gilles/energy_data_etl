@@ -20,10 +20,11 @@ def export_data_to_s3(data, **kwargs) -> None:
 
     Docs: https://docs.mage.ai/design/data-loading#s3
     """
-    file_clean = data[2]
     file = data[1]
+    file_clean = f'{file}_clean.parquet'
+    
     df = data[0]
-    bucket_name = 'mageetl-datalake-add-your-name'
+    bucket_name = os.getenv('BUCKET_NAME')
     s3_client = boto3.client('s3')
 
     parts = file.split('/')
@@ -33,7 +34,7 @@ def export_data_to_s3(data, **kwargs) -> None:
 
 
     try:
-        s3_client.upload_file(file, bucket_name, object)
+        s3_client.upload_file(file_clean, bucket_name, object)
         
     except Exception as e:
         print(f"Failed to upload {file} to {bucket_name}/{object}: {e}")
