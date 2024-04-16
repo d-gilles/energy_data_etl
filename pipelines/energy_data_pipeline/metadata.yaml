@@ -41,6 +41,7 @@ blocks:
   - export_to_s3
   - prepare_ingest
   - clean_up
+  - transform_to_oneday
   executor_config: null
   executor_type: local_python
   has_callback: false
@@ -83,6 +84,7 @@ blocks:
     use_raw_sql: false
   downstream_blocks:
   - clean_up
+  - transform_to_oneday
   executor_config: null
   executor_type: local_python
   has_callback: false
@@ -133,6 +135,32 @@ blocks:
   - change_column_names
   - ingest_to_redshift
   uuid: clean_up
+- all_upstream_blocks_executed: false
+  color: null
+  configuration:
+    data_provider: redshift
+    data_provider_profile: dev
+    data_provider_schema: public
+    data_provider_table: energy_prod_day
+    dbt: {}
+    disable_query_preprocessing: false
+    export_write_policy: replace
+    limit: 1000
+    use_raw_sql: false
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: sql
+  name: transform_to_oneday
+  retry_config: null
+  status: executed
+  timeout: null
+  type: transformer
+  upstream_blocks:
+  - change_column_names
+  - ingest_to_redshift
+  uuid: transform_to_oneday
 cache_block_output_in_memory: false
 callbacks: []
 concurrency_config: {}
