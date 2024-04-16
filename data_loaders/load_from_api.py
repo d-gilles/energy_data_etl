@@ -27,8 +27,11 @@ def load_data_from_api(*args, **kwargs):
     day = (date - year * 10000 - month * 100)
 
     # set time interval to yesterday
-    interval_start = pd.Timestamp(str(date))
-    interval_end = pd.Timestamp(str(date +1))
+    interval_start = pd.Timestamp(str(date), tz='Europe/Berlin')
+    interval_end = pd.Timestamp(str(date +1), tz='Europe/Berlin')
+
+    print(interval_start, interval_end)
+
     country_code = 'DE'  # Germany
 
     print(interval_start)

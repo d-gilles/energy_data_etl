@@ -9,24 +9,25 @@ if 'test' not in globals():
 
 
 @data_loader
-def load_from_s3_bucket(*args, **kwargs):
+def load_from_s3_bucket(data, *args, **kwargs):
     """
     Template for loading data from a S3 bucket.
     Specify your configuration settings in 'io_config.yaml'.
 
     Docs: https://docs.mage.ai/design/data-loading#s3
     """
-    config_path = path.join(get_repo_path(), 'io_config.yaml')
-    config_profile = 'default'
+    print(data)
 
-    bucket_name = 'your_bucket_name'
-    object_key = 'your_object_key'
+    config_path = path.join(get_repo_path(), 'io_config.yaml')
+    config_profile = 'dev'
+
+    bucket_name = data['bucket_name']
+    object_key = data['s3_object']
 
     return S3.with_config(ConfigFileLoader(config_path, config_profile)).load(
         bucket_name,
         object_key,
     )
-
 
 @test
 def test_output(output, *args) -> None:

@@ -36,6 +36,7 @@ def execute_transformer_action(data, *args, **kwargs):
     data['file_clean'] = file_clean
 
     print(df.shape)
+    print(df.dtypes)
 
 
     return [df, data]
@@ -46,6 +47,7 @@ def test_output(output, *args) -> None:
     """
     Template code for testing the output of the block.
     """
+
     columns = ['Date', 'Biomass', 'Fossil Brown coal/Lignite', 'Fossil Gas',
        'Fossil Hard coal', 'Fossil Oil', 'Geothermal', 'Hydro Pumped Storage',
        'Hydro Run-of-river and poundage', 'Hydro Water Reservoir', 'Other',

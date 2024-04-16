@@ -151,7 +151,7 @@ dev:
 
   BUCKET_NAME: "{{ env_var('BUCKET_NAME') }}"
 
-  REDSHIFT_DBNAME: dev
+  REDSHIFT_DBNAME: energy_dwh
   REDSHIFT_HOST: tf-redshift-cluster.covsy7yhcn1v.eu-central-1.redshift.amazonaws.com
   REDSHIFT_PORT: 5439
   REDSHIFT_TEMP_CRED_USER: exampleuser

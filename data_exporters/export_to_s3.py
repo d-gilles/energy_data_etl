@@ -20,6 +20,8 @@ def export_data_to_s3(data, **kwargs) -> None:
 
     Docs: https://docs.mage.ai/design/data-loading#s3
     """
+    
+    print(data)
     data = data[1]
     file_clean = data['file_clean']
     file_name = data['file']
