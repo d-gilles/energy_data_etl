@@ -2,6 +2,7 @@ import io
 import pandas as pd
 from entsoe import EntsoePandasClient
 import os
+from datetime import datetime, timedelta
 
 if 'data_loader' not in globals():
     from mage_ai.data_preparation.decorators import data_loader
@@ -16,8 +17,12 @@ def load_data_from_api(*args, **kwargs):
     """
     Template for loading data from API
     """
-    execution_date = kwargs['execution_date']
-    date = int(execution_date.strftime("%Y%m%d")) -1
+    execution_date = kwargs['execution_date'] - timedelta(days=1)
+
+    execution_date = datetime(year=2024, month=3, day=4) - timedelta(days=1)
+
+    print(type(execution_date))
+    date = int(execution_date.strftime("%Y%m%d"))
 
     print(date)
     
@@ -27,8 +32,8 @@ def load_data_from_api(*args, **kwargs):
     day = (date - year * 10000 - month * 100)
 
     # set time interval to yesterday
-    interval_start = pd.Timestamp(str(date), tz='Europe/Berlin')
-    interval_end = pd.Timestamp(str(date +1), tz='Europe/Berlin')
+    interval_start = pd.Timestamp((execution_date.strftime("%Y%m%d")), tz='Europe/Berlin')
+    interval_end = pd.Timestamp(((execution_date + timedelta(days=1)).strftime("%Y%m%d")), tz='Europe/Berlin')
 
     print(interval_start, interval_end)
 

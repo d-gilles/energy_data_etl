@@ -19,9 +19,12 @@ def execute_transformer_action(data: DataFrame, *args, **kwargs) -> DataFrame:
 
     df = data[0]
     data = data[1]
+    if 'nuclear' not in df.columns:
+        df['nuclear'] = 0
+
     columnnames = ['date', 'biomass', 'fossil_brown_coal', 'fossil_gas',
        'fossil_hard_coal', 'fossil_oil', 'geothermal', 'hydro_pumped_storage',
-       'hydro_run_of_river', 'hydro_water_reservoir', 'other',
+       'hydro_run_of_river', 'hydro_water_reservoir', 'nuclear', 'other',
        'other_renewable', 'solar', 'waste', 'wind_offshore', 'wind_onshore']
 
     df.columns = columnnames

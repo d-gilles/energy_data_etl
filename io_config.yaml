@@ -146,13 +146,13 @@ dev:
 
   AWS_ACCESS_KEY_ID: "{{ env_var('AWS_ACCESS_KEY_ID') }}"
   AWS_SECRET_ACCESS_KEY: "{{ env_var('AWS_SECRET_ACCESS_KEY') }}"
-  AWS_SESSION_TOKEN: session_token (Used to generate Redshift credentials)
-  AWS_REGION: "{{ env_var('AWS_REGION') }}"
+  AWS_SESSION_TOKEN: "{{ env_var('AWS_SESSION_TOKEN') }}" 
+  AWS_REGION: "{{ env_var('AWS_REGION') }}"      
 
   BUCKET_NAME: "{{ env_var('BUCKET_NAME') }}"
 
-  REDSHIFT_DBNAME: "{{ env_var('DATABASE_NAME'} }}"
-  REDSHIFT_HOST: "{{ env_var('CLUSTER_IDENTIFIER') }}"
+  REDSHIFT_DBNAME: "{{ env_var('DATABASE_NAME') }}"
+  REDSHIFT_HOST: "{{ env_var('REDSHIFT_HOSTNAME') }}"
   REDSHIFT_PORT: 5439
   REDSHIFT_TEMP_CRED_USER: "{{ env_var('DB_USER') }}"
   REDSHIFT_TEMP_CRED_PASSWORD: "{{ env_var('DB_PWD') }}"
