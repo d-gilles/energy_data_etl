@@ -151,8 +151,8 @@ dev:
 
   BUCKET_NAME: "{{ env_var('BUCKET_NAME') }}"
 
-  REDSHIFT_DBNAME: energy_dwh
-  REDSHIFT_HOST: tf-redshift-cluster.covsy7yhcn1v.eu-central-1.redshift.amazonaws.com
+  REDSHIFT_DBNAME: "{{ env_var('DATABASE_NAME'} }}"
+  REDSHIFT_HOST: "{{ env_var('CLUSTER_IDENTIFIER') }}"
   REDSHIFT_PORT: 5439
-  REDSHIFT_TEMP_CRED_USER: exampleuser
-  REDSHIFT_TEMP_CRED_PASSWORD: Mustbe8characters
+  REDSHIFT_TEMP_CRED_USER: "{{ env_var('DB_USER') }}"
+  REDSHIFT_TEMP_CRED_PASSWORD: "{{ env_var('DB_PWD') }}"
