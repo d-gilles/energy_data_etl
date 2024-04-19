@@ -1,6 +1,3 @@
-from mage_ai.data_cleaner.transformer_actions.base import BaseAction
-from mage_ai.data_cleaner.transformer_actions.constants import ActionType, Axis
-from mage_ai.data_cleaner.transformer_actions.utils import build_transformer_action
 from pandas import DataFrame
 import pandas as pd
 import os
@@ -13,15 +10,12 @@ if 'test' not in globals():
 
 @transformer
 def execute_transformer_action(data, *args, **kwargs):
-    """
-    Execute Transformer Action: ActionType.REMOVE
 
-    Docs: https://docs.mage.ai/guides/transformer-blocks#remove-columns
-    """
-    print(data)
+    # load file from disk
     file = data['file']
     df = pd.read_parquet(file)
 
+    # set date as index
     df.reset_index(inplace=True)
     df.rename(columns={'index': 'Date'}, inplace=True)
 
@@ -29,6 +23,7 @@ def execute_transformer_action(data, *args, **kwargs):
     to_drop = [col for col in df.columns if col[1] == 'Actual Consumption']
     df = df.drop(columns=to_drop)
 
+    # drop second level column names
     df.columns = df.columns.droplevel(1)
 
 
@@ -36,9 +31,6 @@ def execute_transformer_action(data, *args, **kwargs):
     file_clean = f"{data['path']}{data['year']}-{data['month']}-{data['day']}_clean.parquet"
     df.to_parquet(file_clean)
     data['file_clean'] = file_clean
-
-    print(df.shape)
-    print(df.dtypes)
 
 
     return [df, data]

@@ -13,8 +13,10 @@ def transform_custom(data, *args, **kwargs):
     file = data['file']
     file_clean = data['file_clean']
 
-    os.remove(file)
-    os.remove(file_clean)
+    if os.path.exists(file):
+        os.remove(file)
+    if os.path.exists(file_clean):
+        os.remove(file_clean)
 
     return data
 

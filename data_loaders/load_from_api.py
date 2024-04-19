@@ -15,16 +15,11 @@ client = EntsoePandasClient(api_key='6c399639-c897-4a77-8225-fc0525da549d')
 @data_loader
 def load_data_from_api(*args, **kwargs):
     """
-    Template for loading data from API
+    Loading date from API
     """
+
     execution_date = kwargs['execution_date'] - timedelta(days=1)
-
-    execution_date = datetime(year=2024, month=3, day=4) - timedelta(days=1)
-
-    print(type(execution_date))
     date = int(execution_date.strftime("%Y%m%d"))
-
-    print(date)
     
     # extract year, month, day
     year = date // 10000
@@ -35,12 +30,7 @@ def load_data_from_api(*args, **kwargs):
     interval_start = pd.Timestamp((execution_date.strftime("%Y%m%d")), tz='Europe/Berlin')
     interval_end = pd.Timestamp(((execution_date + timedelta(days=1)).strftime("%Y%m%d")), tz='Europe/Berlin')
 
-    print(interval_start, interval_end)
-
     country_code = 'DE'  # Germany
-
-    print(interval_start)
-    print(interval_end)
 
     #define data for api call
     type_marketagreement_type = 'A01' # daily
@@ -78,7 +68,7 @@ def load_data_from_api(*args, **kwargs):
 @test
 def test_output(output, *args) -> None:
     """
-    Template code for testing the output of the block.
+    Test if a file was writen to disk
     """
 
     assert os.path.exists(output['file']), 'File is not local available'
