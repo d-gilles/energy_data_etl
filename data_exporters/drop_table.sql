@@ -1,0 +1,1 @@
+DROP TABLE IF EXISTS "energy_dwh"."public"."energy_data_pipeline_prepare_ingest_v1";

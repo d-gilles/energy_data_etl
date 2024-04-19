@@ -41,7 +41,6 @@ blocks:
   - export_to_s3
   - prepare_ingest
   - clean_up
-  - transform_to_oneday
   executor_config: null
   executor_type: local_python
   has_callback: false
@@ -84,7 +83,7 @@ blocks:
     use_raw_sql: false
   downstream_blocks:
   - clean_up
-  - transform_to_oneday
+  - drop_table
   executor_config: null
   executor_type: local_python
   has_callback: false
@@ -106,6 +105,7 @@ blocks:
     export_write_policy: append
   downstream_blocks:
   - ingest_to_redshift
+  - prod_one_day
   executor_config: null
   executor_type: local_python
   has_callback: false
@@ -118,7 +118,7 @@ blocks:
   upstream_blocks:
   - change_column_names
   uuid: prepare_ingest
-- all_upstream_blocks_executed: true
+- all_upstream_blocks_executed: false
   color: teal
   configuration: {}
   downstream_blocks: []
@@ -134,6 +134,7 @@ blocks:
   upstream_blocks:
   - change_column_names
   - ingest_to_redshift
+  - renewable_vs_fossil
   uuid: clean_up
 - all_upstream_blocks_executed: true
   color: null
@@ -141,52 +142,76 @@ blocks:
     data_provider: redshift
     data_provider_profile: dev
     data_provider_schema: public
-    data_provider_table: energy_prod_day
+    data_provider_table: prod_one_day
     dbt: {}
     disable_query_preprocessing: false
     export_write_policy: append
     limit: 1000
     use_raw_sql: false
   downstream_blocks:
-  - transfrom_to_conv_and_renew_
+  - renewable_vs_fossil
   executor_config: null
   executor_type: local_python
   has_callback: false
   language: sql
-  name: transform_to_oneday
+  name: prod_one_day
   retry_config: null
-  status: executed
+  status: updated
   timeout: null
-  type: transformer
+  type: data_exporter
   upstream_blocks:
-  - change_column_names
-  - ingest_to_redshift
-  uuid: transform_to_oneday
+  - prepare_ingest
+  uuid: prod_one_day
+- all_upstream_blocks_executed: false
+  color: null
+  configuration:
+    data_provider: redshift
+    data_provider_profile: dev
+    data_provider_schema: public
+    data_provider_table: renewable_vs_fossil
+    dbt: {}
+    disable_query_preprocessing: false
+    export_write_policy: append
+    limit: 1000
+    use_raw_sql: false
+  downstream_blocks:
+  - clean_up
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: sql
+  name: renewable_vs_fossil
+  retry_config: null
+  status: updated
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - prod_one_day
+  uuid: renewable_vs_fossil
 - all_upstream_blocks_executed: true
   color: null
   configuration:
     data_provider: redshift
     data_provider_profile: dev
     data_provider_schema: public
-    data_provider_table: conv_vs_renew
     dbt: {}
-    disable_query_preprocessing: false
+    disable_query_preprocessing: true
     export_write_policy: append
     limit: 1000
-    use_raw_sql: false
+    use_raw_sql: true
   downstream_blocks: []
   executor_config: null
   executor_type: local_python
   has_callback: false
   language: sql
-  name: 'transfrom to conv and renew '
+  name: DROP TABLE
   retry_config: null
   status: executed
   timeout: null
-  type: transformer
+  type: data_exporter
   upstream_blocks:
-  - transform_to_oneday
-  uuid: transfrom_to_conv_and_renew_
+  - ingest_to_redshift
+  uuid: drop_table
 cache_block_output_in_memory: false
 callbacks: []
 concurrency_config: {}

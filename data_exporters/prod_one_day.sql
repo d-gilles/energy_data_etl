@@ -17,4 +17,3 @@ Select
 	sum("wind_onshore") AS "wind_onshore" 
 from {{ df_1 }}
 group by date(date)
-
